@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="plugin.video.watchmelater"
        name="Watch Me Later"
-       version="0.0.2"
-       provider-name="Johan Wieslander">
+       version="0.0.3"
+       provider-name="Popeye">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
   </requires>
