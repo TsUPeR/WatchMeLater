@@ -28,18 +28,15 @@ import xbmcutils.net, re
 import sys, xbmc, xbmcaddon, xbmcgui, xbmcplugin
 
 # plugin constants
-__version__ = "0.0.1"
-__plugin__ = "WatchMeLater-" + __version__
-__author__ = "Johan Wieslander"
-__url__ = "www.xbmc.com"
-__svn_url__ = ""
-__svn_revision__ = "$Revision$"
-__XBMC_Revision__ = "35647"
 __settings__ = xbmcaddon.Addon(id='plugin.video.watchmelater')
 __language__ = __settings__.getLocalizedString
 
-re_vimeo = 'http://vimeo.com/(\d+)"'
-re_youtube = 'http://www.youtube.com/watch\?.*v=(.*?)["&]'
+re_vimeo = 'vimeo.com/(|video/)(\d+)"'
+re_youtube = 'http://www.youtube.com/(watch\?.*v=(.*?)["&]|v/(.*?)["\?])'
+
+#http://player.vimeo.com/video/19474258
+#http://www.youtube.com/v/SYweCrksFWI?version=3
+
 
 
 #Get the rss stream
@@ -73,10 +70,15 @@ def pluginUrl(url):
  videoId = ""
  if vimeoId:
     videoType = "videotype=vimeo"
-    videoId = "videoid=%s" % str(vimeoId[0])
+    (first, second) = vimeoId[0]
+    videoId = "videoid=%s" % str(second)
  elif youtubeId:
     videoType = "videotype=youtube"
-    videoId = "videoid=%s" % str(youtubeId[0])
+    (first, second, third) = youtubeId[0]
+    if second:
+        videoId = "videoid=%s" % str(second)
+    else:
+        videoId = "videoid=%s" % str(third)
  out = videoType + "&" + videoId
  return out
   
